@@ -18,7 +18,8 @@ describe('Angular.io url', function() {
     console.log("Test Name: "+testName);
 
 try{
-    var searchResult=element(by.xpath('/html/body/aio-shell/aio-search-results/div/div/ul[1]/li/a'));
+    //var searchResult=element(by.xpath('/html/body/aio-shell/aio-search-results/div/div/ul[1]/li/a'));
+	var searchResult=element(by.linkText(desiredResult));
     var EC=protractor.ExpectedConditions;
 
     browser.wait(EC.elementToBeClickable(searchResult),10000)
@@ -26,10 +27,12 @@ try{
          //searchResult.getText();
          console.log("clickable");
        },function(err){
-         console.error("Request timed out");
-
+         
+          console.error("\nTest Result: Failed - There are errors.");
+          console.error("==================================================================");
        });
 
+	   //Then following promise check would run if element was found by xpath
         searchResult.getText().then(function(text){
             //matching text against desired linked text.
         if(text==desiredResult){
