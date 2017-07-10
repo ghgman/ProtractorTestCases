@@ -1,0 +1,53 @@
+var p = require('relative-path');
+var expect = require('chai').expect;
+var homePage=require(p('../pages/home_page'));
+var searchtext="testability";
+var EC=protractor.ExpectedConditions;
+ 
+var myStepDefinitionsWrapper = function () {
+
+    this.Given(/^As a Angular.IO Page user, I Navigate to Angular.IO$/, function () {
+        browser.get("http://angular.io");
+        return browser.waitForAngular();
+    });
+
+    this.When(/^I enter text in the searchBox with "testability"$/, function (searchtext) {
+        homePage.enterSearch(searchtext);
+        return browser.sleep(1000);
+    });
+
+    this.Then(/^I should see "TestabilityRegistry"$/, function () {
+	
+        return searchResult=element(by.linkText("TestabilityRegistry"));
+    });
+	
+	
+	    this.Given(/^As a Angular.IO Page user, I Navigate to Angular.IO and searched for "testability" and results are displayed$/, function () {
+        browser.get("http://angular.io");
+		 homePage.enterSearch(searchtext);
+		 browser.waitForAngular();
+        return searchResult=element(by.linkText("TestabilityRegistry"));
+		
+    });
+
+    this.When(/^I click on "TestabilityRegistry" list item link$/, function (searchtext) {
+         searchResult.click();
+        return browser.sleep(1000);
+    });
+
+    this.Then(/^Then  I am navigated to "TestabilityRegistry"$/, function () {
+	    var myCurrentUrl=browser.getCurrentUrl();
+        return (myCurrentUrl=="https://angular.io/api/core/TestabilityRegistry");
+    });
+	
+	
+	
+};
+
+
+
+
+
+
+
+module.exports = myStepDefinitionsWrapper;
